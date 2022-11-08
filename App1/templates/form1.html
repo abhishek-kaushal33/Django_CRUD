@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Form{% endblock title %}
+
+{% block body %}
+<style>
+    body{
+        background: #80d4ff;
+    }
+    div{
+        color: #434323;
+    }
+
+    div.aty{
+        color: #009933;
+    }
+
+    .hi{
+        background:none;
+        border:none;
+        font: size 20rem;
+    }
+
+    .badge:hover{
+        background-color:lightgreen;
+        color:black;
+        title:Update Data;
+    }
+</style>
+
+<form action="" method="POST" novalidate>
+{% csrf_token %}
+{{uf.as_p}}
+<span class="badge badge-pill badge-success"><input type="submit" value="Update" class="hi"></span>
+</form>
+{% endblock body %}

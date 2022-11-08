@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block title %}Form{% endblock title %}
+
+{% block body %}
+ <style>
+    body{
+        background: #80d4ff;
+    }
+    div{
+        color: #434323;
+    }
+
+    div.aty{
+        color: #009933;
+    }
+    .hi{
+        background:none;
+        border:none;
+        font: size 20rem;
+    }
+
+    .badge{
+        font: size 20rem;
+    }
+
+    .badge:hover{
+        background-color:lightgreen;
+        color:black
+    }
+
+    .badge-danger{
+        font: size 20rem;
+    }
+
+    .badge-danger:hover{
+        background-color:lightblue;
+        color:white
+    } 
+
+    .badge-warning{
+        font: size 20rem;
+    }
+
+    .badge-warning:hover{
+        background-color:lightyellow;
+        color:white
+    }
+    a:link{
+        text-decoration:none;
+    }
+
+    span{
+        font: size 20rem;
+    }
+</style> 
+
+<form action="" method="POST" novalidate class="container-flex">
+{% csrf_token %}
+
+{% comment %} {{uf.non_field_errors}}
+    <div>
+    {% for errors in fields.errors %}
+        <span class="errorlist">{{errors}}</span>
+    {% endfor %}
+    </div> {% endcomment %}
+    {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{message.tags}} m-2" id="msg" role="alert">
+            {{message}}
+        </div>
+    {% endfor %}
+    <br>
+{% endif %}     
+   
+{{uf.as_p}}
+<span class="badge badge-pill badge-success"><input type="submit" value="Submit" class="hi"></span>
+</form>
+
+
+<hr>
+<div class="aty"><h1>Database Data :</h1></div><br>
+ <div class="container">
+    {% if us %}
+    {% for details in us  %}
+        <div><h4>ID &nbsp=&nbsp {{details.id}}</div>
+        <div><h4>Username &nbsp=&nbsp {{details.username}}</div>
+        <div><h4>Email &nbsp=&nbsp {{details.email}}</div>
+        <div><h4>Password &nbsp=&nbsp {{details.password}}</div>
+        <div>
+            <form action="{% url 'del' details.id %}" method="POST">
+                {% csrf_token %}
+                <span class="badge badge-pill badge-info"><input type="submit" value="Delete" class="hi"></span>
+                <span class="badge badge-pill badge-warning"><a href="{% url 'update' details.id %}" class="hi wel">Edit</a></span>
+           </form>  
+        </div>
+        <br>    
+    {% endfor %}
+    {% else %}
+        <h2>No data were found in Database</h2>    
+    {% endif %}
+</div> 
+{% endblock body %}
